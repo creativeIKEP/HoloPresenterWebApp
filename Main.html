@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+    //ここからJavaScript
+    function CommentGet(){//送信ボタンを押すと呼び出し
+        var comment = document.body.comment.value;//textフィールドの文章を取得
+        if(comment==""){alert("コメントが入力されていません。"); return;}
+        document.getElementById("html").style.display="none";//webアプリ表示を消し
+        document.getElementById("commentGif").style.display="block";//送信GIFアニメーションを表示
+        google.script.run.withSuccessHandler().CommentSet(comment);//.gsファイルのCommentSet()を実行
+        setTimeout("ThankComment()", 3000);
+    }
+    
+    function GoodButton(){//「いいね」ボタンを押すと呼び出し
+        document.getElementById("html").style.display="none";//webアプリ表示を消し
+        document.getElementById("goodGif").style.display="block";//いいねGIFアニメーションを表示
+        google.script.run.withSuccessHandler().GoodSet();//.gsファイルのGoodSet()を実行
+        setTimeout("ThankGood()", 1800);
+    }
+    
+    function ThankComment(){
+        alert("コメントを送信しました。\nありがとうございます！");
+        document.body.comment.value="";
+        document.getElementById("html").style.display="block";//webアプリを表示し直し
+        document.getElementById("commentGif").style.display="none";//送信GIFアニメーションを非表示
+    }
+    
+    function ThankGood(){
+        alert("Thank you!!");
+        document.getElementById("html").style.display="block";//webアプリを表示し直し
+        document.getElementById("goodGif").style.display="none";//いいねGIFアニメーションを非表示
+    }
+    
+    function Enter(code){
+        //エンターキー押下でコメント送信
+	   if(13 === code)
+	   {
+		   CommentGet();
+	   }
+    }
+    
+    </script>
+  </head>
+  <body bgcolor="fffaf0">
+  <form name=body>
+    <br>
+    <div  id="html" style="text-align:center; display:block;">
+    <font size="7" color="#1e90ff">HoloPresenter聴講者WEBアプリ</font>
+    <br>
+    <br>
+    <font size="6" color="#ff0000">あなたの感想をリアルタイムでプレゼンターに届けませんか？</font>
+    <br>
+    <font size="4" color="#000000">誰かの発表中に
+    <br><br>「〜って何？」、「なんで〜なの？」
+    <br><br>と思ったことはありませんか？
+    <br>でも、発表後にわざわざ聞くのもちょっと...</font>
+    <br><br>
+    <font size="5" color="#ff00ff">このアプリであなたの本音やちょっとした疑問を<br>気軽にプレゼンターに届けましょう!!</font>
+    <br><br><br>
+    <font size="3" color="#000000">すごい！、オモシロイ！と思ったら「いいね！」ボタンを押して評価しよう！<br>疑問に思ったことは、すぐにコメントを送って聞いてみよう！</font>
+    <br><br><br><br>
+    <input type=button value="いいね!👍" style="width:230px;height:80px;font-size:40px;" onclick="GoodButton();">
+    <br><br><br><br><br><br><br><br>
+    <input type=text placeholder="ここにコメントを入力して送信してね" name="comment" style="width:800px;height:80px;font-size:45px;" onkeypress="Enter(event.keyCode);">
+    <input type=text style="display:none;">
+    <br>
+    <br>
+    <input type=button value="送信📤" name="sendButton" style="width:200px;height:80px;font-size:40px;" onclick="CommentGet();" >
+    <br><br><br>
+    </div>
+    <div id="commentGif" style="text-align:center; display:none;">
+  <img src="https://drive.google.com/uc?id=10LmLCiQdmcZTwS3DE21eKnx48YL3DilG" width=800px height=800px>
+  </div>
+  <div id="goodGif" style="text-align:center; display:none;">
+  <img src="https://drive.google.com/uc?id=1PG_zJaLoU1ZEpUt6sTaTNVBSdvk4DbA6" width=800px height=800px>
+  </div>
+  </form>
+  </body>
+</html>
+
